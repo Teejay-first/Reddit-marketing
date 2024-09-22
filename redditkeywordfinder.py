@@ -15,7 +15,7 @@ def reddit_keyword_search(subreddits, keywords, time_filter='week', limit=100):
     for subreddit in subreddits:
         subreddit = reddit.subreddit(subreddit)
         
-        # Search submissions
+        # Search submissions test
         for submission in subreddit.search(query=' OR '.join(keywords), sort='new', time_filter=time_filter, limit=limit):
             if any(keyword.lower() in submission.title.lower() or keyword.lower() in submission.selftext.lower() for keyword in keywords):
                 matched_keyword = next(keyword for keyword in keywords if keyword.lower() in submission.title.lower() or keyword.lower() in submission.selftext.lower())
@@ -38,22 +38,22 @@ def reddit_keyword_search(subreddits, keywords, time_filter='week', limit=100):
     return results
 
 def write_to_google_sheets(results):
-    # Set up credentials for Google Sheets API
+    # Set up credentials for Google Sheets API test
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
     creds = ServiceAccountCredentials.from_json_keyfile_name('path/to/your/credentials.json', scope)
     client = gspread.authorize(creds)
 
-    # Open the Google Sheet (you'll need to share your sheet with the email in your credentials)
+    # Open the Google Sheet (you'll need to share your sheet with the email in your credentials) test
     sheet = client.open('Reddit Keyword Results').sheet1
 
-    # Clear existing data (optional)
+    # Clear existing data (optional) test
     sheet.clear()
 
-    # Write headers
+    # Write headers test
     headers = ['Community', 'Targeted Keyword', 'Post Link']
     sheet.append_row(headers)
 
-    # Write results
+    # Write results test
     for result in results:
         sheet.append_row([result['community'], result['targeted_keyword'], result['post_link']])
 
@@ -65,3 +65,6 @@ results = reddit_keyword_search(subreddits, keywords)
 write_to_google_sheets(results)
 
 print(f"Results have been written to Google Sheets. Total results: {len(results)}")
+
+
+#Wow dude, why are you spying on me behaviour?
